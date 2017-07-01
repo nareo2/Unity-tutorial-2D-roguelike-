@@ -46,16 +46,18 @@ public class Player : MovingObject {
         int horizontal = 0;
         int vertical = 0;
 
-    #if UNITY_STANDALONE || UNITY_WEBPLAYER
+#if UNITY_STANDALONE || UNITY_WEBPLAYER
+
 
         horizontal = (int)Input.GetAxisRaw("Horizontal");
         vertical = (int)Input.GetAxisRaw("Vertical");
 
         if (horizontal != 0)
             vertical = 0;
-    #else
 
-        if(Input.touchCount > 0)
+#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+
+        if (Input.touchCount > 0)
         {
             Touch myTouch = Input.touches[0];
 
@@ -75,7 +77,7 @@ public class Player : MovingObject {
             }
 
         }
-    #endif
+#endif
 
         if (horizontal != 0 || vertical != 0)
             AttemptMove<Wall>(horizontal, vertical);
